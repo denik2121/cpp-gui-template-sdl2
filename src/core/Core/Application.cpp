@@ -142,8 +142,13 @@ ExitStatus App::Application::run() {
         ImGui::Text("UI scaling factor: %f", font_scaling_factor);
         ImGui::End();
       }
-    }
+      ImGui::GetForegroundDrawList()->AddRect(ImVec2(100, 100), ImVec2(200, 200), IM_COL32(255, 0, 0, 255));
 
+    // Рисуем белый круг по середине экрана
+    ImVec2 screenCenter = ImGui::GetIO().DisplaySize * 0.5f;
+    float circleRadius = 50.0f;
+    ImGui::GetForegroundDrawList()->AddCircleFilled(screenCenter, circleRadius, IM_COL32(255, 255, 255, 255), 32);
+    }
     // Rendering
     ImGui::Render();
 
@@ -151,6 +156,7 @@ ExitStatus App::Application::run() {
     SDL_RenderClear(m_window->get_native_renderer());
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
     SDL_RenderPresent(m_window->get_native_renderer());
+  }
   }
 
   return m_exit_status;
